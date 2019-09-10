@@ -1,0 +1,13 @@
+FROM debian:testing
+
+LABEL maintainer="Azat Khuzhin <a3at.mail@gmail.com>"
+
+RUN apt-get update
+RUN apt-get install --no-install-recommends -y \
+    abi-tracker \
+    abi-monitor \
+    abi-dumper \
+    abi-compliance-checker \
+    pkgdiff \
+    vtable-dumper \
+    && true
