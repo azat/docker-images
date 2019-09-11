@@ -1,0 +1,28 @@
+---
+name: dockerimage-lvc-alpine
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Build the Docker image
+        run: |
+          registry=docker.pkg.github.com
+          name=$registry/$GITHUB_REPOSITORY/lvc-alpine
+          echo "Image: $name (on behalf of $GITHUB_ACTOR)"
+
+          docker login $registry --username $GITHUB_ACTOR --password $DOCKER_PASS
+          docker build . --file tools/Dockerfile.lvc-debian --tag $name
+          docker push $name
+        env:
+          # According to [1]:
+          #
+          # "GITHUB_TOKEN works for publishing most types of packages (eg, npm)
+          # but not yet for all.  This will work for all types of packages -
+          # including Docker - by the time GitHub Actions and GitHub Package
+          # Registry is out of beta."
+          #
+          #   [1]: https://github.community/t5/GitHub-Actions/Github-Actions-Docker-login/td-p/29852/page/2
+          DOCKER_PASS: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
