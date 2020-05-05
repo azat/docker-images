@@ -1,0 +1,15 @@
+FROM alpine
+
+RUN apk update
+RUN apk add --no-cache \
+    perl \
+    curl \
+    gcc \
+    make \
+    wget \
+    tar \
+    && true
+
+RUN wget -O installer-master.tar.gz https://github.com/lvc/installer/archive/master.tar.gz
+RUN tar -xf installer-master.tar.gz
+RUN perl installer-master/installer.pl -install abi-tracker
