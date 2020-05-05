@@ -3,6 +3,8 @@ FROM debian:testing
 LABEL maintainer="Azat Khuzhin <a3at.mail@gmail.com>"
 
 RUN apt-get update
+
+# LVC
 RUN apt-get install --no-install-recommends -y \
     abi-tracker \
     abi-monitor \
@@ -11,4 +13,15 @@ RUN apt-get install --no-install-recommends -y \
     pkgdiff \
     vtable-dumper \
     git \
+    ssh \
+    curl \
+    ca-certificates \
+    automake \
+    autoconf \
+    libtool \
+    && true
+
+# libevent
+RUN apt-get install --no-install-recommends -y \
+    libssl-dev \
     && true
