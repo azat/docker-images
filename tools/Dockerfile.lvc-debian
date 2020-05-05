@@ -1,3 +1,5 @@
+# lvc tools + toolchain + libevent stuff
+
 FROM debian:testing
 
 LABEL maintainer="Azat Khuzhin <a3at.mail@gmail.com>"
