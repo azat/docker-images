@@ -1,5 +1,5 @@
 ---
-name: dockerimage-lvc-alpine
+name: dockerimage-lvc-debian
 on: [push]
 
 jobs:
@@ -10,7 +10,7 @@ jobs:
       - name: Build the Docker image
         run: |
           registry=docker.pkg.github.com
-          name=$registry/$GITHUB_REPOSITORY/lvc-alpine
+          name=$registry/$GITHUB_REPOSITORY/lvc-debian
           echo "Image: $name (on behalf of $GITHUB_ACTOR)"
 
           docker login $registry --username $GITHUB_ACTOR --password $DOCKER_PASS
