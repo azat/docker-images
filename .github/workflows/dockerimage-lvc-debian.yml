@@ -1,6 +1,9 @@
 ---
 name: dockerimage-lvc-debian
-on: [push]
+on:
+  push:
+    paths:
+      tools/Dockerfile.lvc-debian
 
 jobs:
   build:
