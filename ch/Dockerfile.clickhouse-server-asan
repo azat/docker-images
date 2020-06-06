@@ -27,6 +27,7 @@ RUN \
     ch_packages="clickhouse-client_$ch_version+asan_all.deb clickhouse-common-static_$ch_version+asan_amd64.deb clickhouse-server_$ch_version+asan_all.deb" && \
     echo $ch_packages | tr ' ' '\n' | xargs -t -i -n1 wget -q $ch_url/{}
 RUN dpkg -i *.deb
+RUN rm *.deb
 
 ADD https://github.com/tianon/gosu/releases/download/$gosu_ver/gosu-amd64 /bin/gosu
 
