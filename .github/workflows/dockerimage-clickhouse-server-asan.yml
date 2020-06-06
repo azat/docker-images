@@ -4,9 +4,9 @@ name: dockerimage-ch-clickhouse-server-asan
 on:
   push:
     paths:
-      - ch/Dockerfile.clickhouse-server-asan
-      - ch/Dockerfile.clickhouse-server-asan-dbg
-      - .github/workflows/dockerimage-clickhouse-server-asan.yml
+    - ch/Dockerfile.clickhouse-server-asan
+    - ch/Dockerfile.clickhouse-server-asan-dbg
+    - .github/workflows/dockerimage-clickhouse-server-asan.yml
 
 jobs:
   build:
