@@ -12,6 +12,8 @@ ARG gosu_ver=1.10
 # - update ch_version (example: 20.5.1.3627)
 ARG ch_sha=5f99d887ccc235c6c177ccbf5f96292806f5a0d7
 ARG ch_version=20.5.1.3649
+ARG ch_url=https://clickhouse-builds.s3.yandex.net/0/$ch_sha/clang-10_relwithdebuginfo_address_bundled_unsplitted_disable_False_deb
+ARG ch_packages="clickhouse-client_$ch_version+asan_all.deb clickhouse-common-static_$ch_version+asan_amd64.deb clickhouse-server_$ch_version+asan_all.deb"
 
 RUN apt-get update \
     && apt-get update \
@@ -22,10 +24,7 @@ RUN apt-get update \
            wget \
     && true
 
-RUN \
-    ch_url=https://clickhouse-builds.s3.yandex.net/0/$ch_sha/clang-10_relwithdebuginfo_address_bundled_unsplitted_disable_False_deb && \
-    ch_packages="clickhouse-client_$ch_version+asan_all.deb clickhouse-common-static_$ch_version+asan_amd64.deb clickhouse-server_$ch_version+asan_all.deb" && \
-    echo $ch_packages | tr ' ' '\n' | xargs -t -i -n1 wget -q $ch_url/{}
+RUN echo $ch_packages | tr ' ' '\n' | xargs -t -i -n1 wget -q $ch_url/{}
 RUN dpkg -i *.deb
 RUN rm *.deb
 
