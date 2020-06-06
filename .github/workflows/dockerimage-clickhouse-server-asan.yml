@@ -1,0 +1,23 @@
+---
+name: dockerimage-ch-clickhouse-server-asan
+on:
+  push:
+    paths:
+      ch/Dockerfile.clickhouse-server-asan
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Build the Docker image
+        run: |
+          registry=docker.pkg.github.com
+          name=$registry/$GITHUB_REPOSITORY/clickhouse-server-asan
+          echo "Image: $name (on behalf of $GITHUB_ACTOR)"
+
+          docker login $registry --username $GITHUB_ACTOR --password $DOCKER_PASS
+          docker build ch --file ch/Dockerfile.clickhouse-server-asan --tag $name
+          docker push $name
+        env:
+          DOCKER_PASS: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
