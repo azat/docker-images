@@ -1,0 +1,38 @@
+---
+# TODO: split debug and debug-dbg
+name: dockerimage-ch-clickhouse-server-debug
+on:
+  push:
+    paths:
+    - ch/Dockerfile.clickhouse-server-debug
+    - ch/Dockerfile.clickhouse-server-debug-dbg
+    - .github/workflows/dockerimage-clickhouse-server-debug.yml
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Build/Push clickhouse-server-debug
+        run: |
+          registry=docker.pkg.github.com
+          name=$registry/$GITHUB_REPOSITORY/clickhouse-server-debug
+          echo "Image: $name (on behalf of $GITHUB_ACTOR)"
+
+          docker login $registry --username $GITHUB_ACTOR --password $DOCKER_PASS
+          docker build ch --file ch/Dockerfile.clickhouse-server-debug --tag $name
+          docker push $name
+        env:
+          DOCKER_PASS: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+
+      - name: Build/Push clickhouse-server-debug-dbg
+        run: |
+          registry=docker.pkg.github.com
+          name=$registry/$GITHUB_REPOSITORY/clickhouse-server-debug-dbg
+          echo "Image: $name (on behalf of $GITHUB_ACTOR)"
+
+          docker login $registry --username $GITHUB_ACTOR --password $DOCKER_PASS
+          docker build ch --file ch/Dockerfile.clickhouse-server-debug-dbg --tag $name
+          docker push $name
+        env:
+          DOCKER_PASS: ${{ secrets.PERSONAL_ACCESS_TOKEN }}

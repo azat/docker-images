@@ -1,0 +1,13 @@
+FROM docker.pkg.github.com/azat/docker-images/clickhouse-server-debug
+
+ARG ch_packages="clickhouse-common-static-dbg_$ch_version+debug_amd64.deb"
+RUN echo $ch_packages | tr ' ' '\n' | xargs -t -i -n1 wget -q $ch_url/{}
+RUN dpkg -i *.deb
+RUN rm *.deb
+
+RUN apt-get update \
+    && apt-get update \
+    && apt-get install --allow-unauthenticated --yes --no-install-recommends \
+           gdb \
+           strace \
+    && true
